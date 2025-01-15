@@ -8,7 +8,7 @@ class AdminRoleController {
       await AdminRole.create({
         role_name: role_name,
         description: description,
-        created_at: new Date(),
+        createdAt: new Date(),
         created_by: req.current_user?.full_name
       });
       const responseCreated = response({ status: 201, message: 'Admin role created successfully' });

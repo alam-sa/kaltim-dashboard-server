@@ -4,13 +4,13 @@ const customerRoute = require('./customer_route');
 const salesUserRoute = require('./sales_user_route');
 const ticketRoute = require('./ticket_route');
 const adminRoleRoute = require('./admin_role_route');
-const { AdminRole, CustomerTypes } = require('../models');
+const { CustomerTypes } = require('../models');
 
 // Admin Role
 // router.get('/admin-role', async (req, res, next) => {
 // 	try {
 // 		const data = await AdminRole.findAll({
-// 			attributes: { exclude: ['created_at', 'updated_at'] }
+// 			attributes: { exclude: ['createdAt', 'updatedAt'] }
 // 		});
 // 		res.status(200).json(data);
 // 	} catch (err) {
@@ -23,7 +23,7 @@ const { AdminRole, CustomerTypes } = require('../models');
 router.get('/customer-type', async (req, res, next) => {
 	try {
 		const data = await CustomerTypes.findAll({
-			attributes: { exclude: ['created_at', 'updated_at'] }
+			attributes: { exclude: ['createdAt', 'updatedAt'] }
 		});
 		res.status(200).json(data);
 	} catch (err) {

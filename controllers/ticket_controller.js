@@ -4,7 +4,7 @@ class TicketController {
 	static async getTicketCategories(req, res, next) {
 		try {
 			const data = await TicketCategories.findAll({
-				attributes: { exclude: ['created_at', 'updated_at'] }
+				attributes: { exclude: ['createdAt', 'updatedAt'] }
 			});
 			res.status(200).json(data);
 		} catch (err) {
@@ -25,7 +25,7 @@ class TicketController {
 	static async getTicketSubcategories(req, res, next) {
 		try {
 			const data = await TicketSubcategories.findAll({
-				attributes: { exclude: ['created_at', 'updated_at'] }
+				attributes: { exclude: ['createdAt', 'updatedAt'] }
 			});
 			res.status(200).json(data);
 		} catch (err) {

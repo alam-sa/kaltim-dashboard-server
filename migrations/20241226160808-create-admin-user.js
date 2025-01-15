@@ -30,11 +30,11 @@ module.exports = {
       updated_by: {
         type: Sequelize.STRING
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }
@@ -50,10 +50,12 @@ module.exports = {
       unique: true
     });
     await queryInterface.addIndex('AdminUsers', ['created_by'], {
-      name: "adminusers_index_on_created_by"
+      name: "adminusers_index_on_created_by",
+      allowNull: true
     });
     await queryInterface.addIndex('AdminUsers', ['updated_by'], {
-      name: "adminusers_index_on_updated_by"
+      name: "adminusers_index_on_updated_by",
+      allowNull: true
     });
   },
   async down(queryInterface, Sequelize) {

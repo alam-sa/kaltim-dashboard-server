@@ -57,11 +57,11 @@ module.exports = {
       completed_at: {
         type: Sequelize.DATE
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }
@@ -89,10 +89,12 @@ module.exports = {
       name: 'tickets_index_on_type_of_fault'
     });
     await queryInterface.addIndex('Tickets', ['created_by'], {
-      name: 'tickets_index_on_created_by'
+      name: 'tickets_index_on_created_by',
+      allowNull: true
     });
     await queryInterface.addIndex('Tickets', ['updated_by'], {
-      name: 'tickets_index_on_updated_by'
+      name: 'tickets_index_on_updated_by',
+      allowNull: true
     });
   },
   async down(queryInterface, Sequelize) {

@@ -32,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
     created_by: DataTypes.STRING,
     updated_by: DataTypes.STRING,
     completed_at: DataTypes.DATE,
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Ticket',

@@ -21,11 +21,24 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     created_by: DataTypes.STRING,
     updated_by: DataTypes.STRING,
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'AdminUser',
+    hooks: {
+      beforeCreate: (adminUser, options) => {
+        if (!adminUser.created_by) {
+          adminUser.created_by = 'System';
+        }
+      },
+      beforeUpdate: (adminUser, options) => {
+        adminUser.created_by = adminUser._previousDataValues.created_by;
+        if (!adminUser.updated_by) {
+          adminUser.updated_by = 'System';
+        }
+      }
+    }
   });
   return AdminUser;
 };

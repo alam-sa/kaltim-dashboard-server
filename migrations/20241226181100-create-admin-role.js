@@ -23,11 +23,11 @@ module.exports = {
       updated_by: {
         type: Sequelize.STRING
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
       }
@@ -38,9 +38,11 @@ module.exports = {
     });
     await queryInterface.addIndex('AdminRoles', ['created_by'], {
       name: 'adminroles_index_on_created_by',
+      allowNull: true
     });
     await queryInterface.addIndex('AdminRoles', ['updated_by'], {
       name: 'adminroles_index_on_updated_by',
+      allowNull: true
     });
   },
   async down(queryInterface, Sequelize) {

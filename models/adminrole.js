@@ -19,13 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     created_by: DataTypes.STRING,
     updated_by: DataTypes.STRING,
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'AdminRole',
-    tableName: 'AdminRoles',
-    underscored: true,
     hooks: {
       beforeCreate: (adminRole, options) => {
         if (!adminRole.created_by) {
