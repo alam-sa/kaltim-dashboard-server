@@ -17,7 +17,7 @@ class AdminUserController {
 				phone_number,
 				email,
 				password: hashPassword(password),
-				role_id: role_id,
+				role_id: role_id, 
 				createdAt: new Date()
 			});
 			const responseSuccess = response({ status: 201, message: 'Registration successful! You are now registered as an admin user.' });
@@ -52,6 +52,58 @@ class AdminUserController {
 			next(err);
 		};
 	};
+
+	static async addNewAdmin(req, res, next) {
+		const { full_name, phone_number, email, password, role_id } = req.body;
+		try {
+			await AdminUser.create({
+				full_name,
+				phone_number,
+				email,
+				password: hashPassword(password),
+				role_id: role_id, 
+				created_by: req.currentUser?.full_name || 'unknown',
+				createdAt: new Date()
+			});
+			const responseSuccess = response({ status: 201, message: 'Add new user successful!' });
+			res.status(201).json(responseSuccess);
+		} catch (err) {
+			console.log(err);
+			next(err);
+		};
+	};
+
+	static async editAdmin(req, res, next) {
+		const { full_name, phone_number, email, password, role_id } = req.body;
+		const { id } = req.params;
+		try {
+			const payload = {};
+			full_name ? payload.full_name = full_name : null;
+			phone_number ? payload.phone_number = phone_number : null;
+			email ? payload.email = email : null;
+			role_id ? payload.role_id = role_id : null;
+			req.currentUser?.full_name ? payload.updated_by = req.currentUser.full_name : 'unknown';
+			await AdminUser.update(payload, {
+				where: { id: id }
+			});
+			const responseSuccess = response({ status: 201, message: 'Update admin user successful!' });
+			res.status(201).json(responseSuccess);
+		} catch (err) {
+			console.log(err);
+			next(err);
+		}
+	}
+	static async deleteAdmin(req, res, next) {
+		const { id } = req.params;
+		try {
+			await AdminUser.destroy(id);
+			const responseSuccess = response({ status: 201, message: 'Update admin user successful!' });
+			res.status(201).json(responseSuccess);
+		} catch (err) {
+			console.log(err);
+			next(err);
+		}
+	}
 };
 
 module.exports = AdminUserController;
