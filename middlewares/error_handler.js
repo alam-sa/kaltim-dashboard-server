@@ -1,6 +1,5 @@
 function errorHandler(err, req, res, next) {
   const response = {};
-  console.log(err.message);
   switch (err.name) {
     case 'SequelizeDatabaseError':
       response.statusCode = 400;
