@@ -24,6 +24,19 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'TicketSubcategories',
+    hooks: {
+      beforeCreate: (ticketSubcategories, options) => {
+        if (!ticketSubcategories.created_by) {
+          ticketSubcategories.created_by = 'System';
+        }
+      },
+      beforeUpdate: (ticketSubcategories, options) => {
+        ticketSubcategories.created_by = ticketSubcategories._previousDataValues.created_by;
+        if (!ticketSubcategories.updated_by) {
+          ticketSubcategories.updated_by = 'System';
+        }
+      }
+    }
   });
   return TicketSubcategories;
 };

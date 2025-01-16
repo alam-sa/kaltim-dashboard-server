@@ -22,7 +22,7 @@ async function authentication(request, response, next) {
 
     const decoded = verify(access_token);
     request.currentUser = decoded;
-
+    
     // Pass to Controller if token is present
     next();
 

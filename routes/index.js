@@ -33,9 +33,30 @@ router.get('/customer-type', async (req, res, next) => {
 });
 
 router.post('/customer-type/add', async (req, res, next) => {
-	const { type, description } = req.body;
+	const { customer_type, description } = req.body;
 	try {
-		await CustomerTypes.create({type, description});
+		await CustomerTypes.create({customer_type, description});
+		res.status(201).json({message: 'Data Berhasil Disimpan!'})
+	} catch (err) {
+		console.error(err);
+		next(err);
+	}
+});
+
+router.patch('/customer-type/:id', async (req, res, next) => {
+	const { customer_type, description } = req.body;
+	const { id } = req.params;
+	try {
+		console.log(customer_type);
+		
+		const payload = {};
+		customer_type ? payload.customer_type = customer_type : null;
+		description ? payload.description = description : null;
+		console.log(payload);
+		
+		await CustomerTypes.update(payload, {
+			where: { id }
+		});
 		res.status(201).json({message: 'Data Berhasil Disimpan!'})
 	} catch (err) {
 		console.error(err);

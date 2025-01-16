@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Customer.belongsTo(models.CustomerTypes, { foreignKey: 'type_id', targetKey: 'id' });
     }
   }
   Customer.init({
@@ -28,6 +29,19 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Customer',
+    hooks: {
+      beforeCreate: (customer, options) => {
+        if (!customer.created_by) {
+          customer.created_by = 'System';
+        }
+      },
+      beforeUpdate: (customer, options) => {
+        customer.created_by = customer._previousDataValues.created_by;
+        if (!customer.updated_by) {
+          customer.updated_by = 'System';
+        }
+      }
+    }
   });
   return Customer;
 };

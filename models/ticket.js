@@ -37,6 +37,19 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Ticket',
+    hooks: {
+      beforeCreate: (ticket, options) => {
+        if (!ticket.created_by) {
+          ticket.created_by = 'System';
+        }
+      },
+      beforeUpdate: (ticket, options) => {
+        ticket.created_by = ticket._previousDataValues.created_by;
+        if (!ticket.updated_by) {
+          ticket.updated_by = 'System';
+        }
+      }
+    }
   });
   return Ticket;
 };

@@ -1,6 +1,12 @@
 function errorHandler(err, req, res, next) {
   const response = {};
+  console.log(err.message);
   switch (err.name) {
+    case 'SequelizeDatabaseError':
+      response.statusCode = 400;
+      response.message = err.message
+      res.status(response.statusCode).json(response);
+      break;
     case 'SequelizeValidationError':
       response.statusCode = 400;
       response.message = err.errors[0].message

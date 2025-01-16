@@ -33,7 +33,7 @@ class AdminUserController {
 		try {
 			const userData = await AdminUser.findOne({
 				where: { email: email },
-				attributes: ['email', 'password', 'role_id']
+				attributes: ['full_name', 'email', 'password', 'role_id']
 			});
 			if (!userData) throw {
 				name: "BadRequest",
@@ -44,7 +44,7 @@ class AdminUserController {
         name: "BadRequest",
         message: "Incorrect username or password!"
       };
-			const access_token = sign({ email: userData.email, role_id: userData.role_id });
+			const access_token = sign({ full_name: userData.full_name, email: userData.email, role_id: userData.role_id });
 			const responseSuccess = response({ status: 200, message: 'Login successful!', data: { access_token } });
 			res.status(200).json(responseSuccess);
 		} catch (err) {
