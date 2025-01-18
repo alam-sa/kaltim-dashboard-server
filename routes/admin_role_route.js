@@ -21,6 +21,7 @@ router.get('/', async (req, res, next) => {
 router.post('/add', AdminRoleController.addAdminRole);
 router.post('/edit/:id', validateEditAdminRole, AdminRoleController.editAdminRole);
 router.delete('/:id', validateDeleteAdminRole, AdminRoleController.deleteAdminRole);
+router.get('/all', AdminRoleController.getAllAdminRole);
 
 
 module.exports = router;

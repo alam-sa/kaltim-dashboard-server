@@ -4,6 +4,8 @@ const customerRoute = require('./customer_route');
 const salesUserRoute = require('./sales_user_route');
 const ticketRoute = require('./ticket_route');
 const adminRoleRoute = require('./admin_role_route');
+const areaRoute = require('./area_route');
+
 const { CustomerTypes } = require('../models');
 
 // Admin Role
@@ -69,5 +71,6 @@ router.use('/customer', customerRoute);
 router.use('/sales', salesUserRoute);
 router.use('/ticket', ticketRoute);
 router.use('/admin-role', adminRoleRoute);
+router.use('/area', areaRoute);
 
 module.exports = router;

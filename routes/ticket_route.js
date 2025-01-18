@@ -12,4 +12,5 @@ router.post('/subcategories/add', TicketController.addTicketSubcategories);
 router.post('/add', TicketController.addTicket);
 router.patch('/edit/:ticketId', TicketController.editTicket);
 router.get('/:ticketId', TicketController.getTickets);
+router.get('/', TicketController.getAllTickets);
 module.exports = router;

@@ -4,7 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.addColumn('Tickets', 'subcategory_id', {
       type: Sequelize.INTEGER,
-      allowNull: false, // Set to true if the foreign key can be null
+      allowNull: true, // Set to true if the foreign key can be null
       references: {
         model: 'TicketSubcategories', // Name of the referenced table
         key: 'id',                 // Primary key of the referenced table

@@ -1,6 +1,7 @@
 const { AdminUser, sequelize } = require('../models');
 const { response } = require('../helpers/response');
 const { sign } = require('../helpers/jwt');
+const { Op } = require('sequelize');
 
 // Bcrypt password hashing modules
 const { hashPassword, comparePassword } = require('../helpers/bycrypt');
@@ -43,7 +44,7 @@ class AdminUserController {
         name: "BadRequest",
         message: "Incorrect username or password!"
       };
-			const access_token = sign({ full_name: userData.full_name, email: userData.email, role_id: userData.role_id });
+			const access_token = sign({ full_name: userData.full_name, email: userData.email, role_id: userData.role_id, user_type: 'admin' });
 			const responseSuccess = response({ status: 200, message: 'Login successful!', data: { access_token } });
 			res.status(200).json(responseSuccess);
 		} catch (err) {
@@ -95,7 +96,6 @@ class AdminUserController {
 				where: { id: id }, t
 			});
 
-			console.log(full_name, oldFullname);
 			if (full_name && full_name !== oldFullname) {
 				await updateByColumns(
 					{ oldName: oldFullname, newName: full_name, columns: ['created_by', 'updated_by'] },
@@ -117,7 +117,11 @@ class AdminUserController {
 	static async deleteAdmin(req, res, next) {
 		const { id } = req.params;
 		try {
-			await AdminUser.destroy(id);
+			await AdminUser.destroy({
+				where: {
+					id: +id,
+				}
+			});
 			const responseSuccess = response({ status: 201, message: 'Update admin user successful!' });
 			res.status(201).json(responseSuccess);
 		} catch (err) {
@@ -125,6 +129,37 @@ class AdminUserController {
 			next(err);
 		}
 	};
+	static async getAllAdmin(req, res, next) {
+		const { search, role_id } = req.query;
+    try {
+			const condition = {};
+      if (search) {
+        condition[Op.or] = [
+          { full_name: { [Op.iLike]: `%${search}%` } }, // Case-insensitive match for full_name
+          { email: { [Op.iLike]: `%${search}%` } },    // Case-insensitive match for email
+        ];
+      };
+			if (role_id) {
+        if (!Number.isInteger(+role_id)) {
+          throw {
+            name: 'BadRequest',
+            message: 'Invalid role_id value'
+          };
+        };
+        condition.role_id = +role_id;
+      };
+      const data = await AdminUser.findAll({
+				where: condition,
+				attributes: { exclude: 'password' },
+        order: [['updatedAt', 'DESC']]
+      });
+      const responseSuccess = response({ status: 200, message: 'success', data:data });
+      res.status(200).json(responseSuccess);
+    } catch (err) {
+      console.error(err);
+      next(err);
+    }
+  }
 };
 
 module.exports = AdminUserController;

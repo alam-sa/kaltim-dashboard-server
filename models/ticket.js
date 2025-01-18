@@ -11,9 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Ticket.hasOne(models.TicketCategories, { foreignKey: 'category_id' });
-      Ticket.hasOne(models.TicketSubcategories, { foreignKey: 'subcategory_id' });
-
+      Ticket.belongsTo(models.TicketCategories, { foreignKey: 'category_id', targetKey: 'id' });
+      Ticket.belongsTo(models.TicketSubcategories, { foreignKey: 'subcategory_id', targetKey: 'id' });
+      Ticket.belongsTo(models.Area, { foreignKey: 'area_id', targetKey: 'id' });
+      Ticket.belongsTo(models.Customer, { foreignKey: 'customer_id', targetKey: 'id' });
     }
   }
   Ticket.init({

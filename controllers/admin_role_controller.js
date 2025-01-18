@@ -71,6 +71,18 @@ class AdminRoleController {
       next(err);
     };
   };
+  static async getAllAdminRole(req, res, next) {
+    try {
+      const data = await AdminRole.findAll({
+        order: [['updatedAt', 'DESC']]
+      });
+      const responseSuccess = response({ status: 200, message: 'success', data:data });
+      res.status(200).json(responseSuccess);
+    } catch (err) {
+      console.error(err);
+      next(err);
+    }
+  };
 };
 
 module.exports = AdminRoleController;

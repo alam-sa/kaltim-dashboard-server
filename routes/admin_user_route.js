@@ -6,6 +6,7 @@ const { validateRegisterAdmin, validateLoginAdmin } = require('../validations/ad
 router.post('/register',validateRegisterAdmin, AdminUserController.register);
 router.post('/login', validateLoginAdmin, AdminUserController.login);
 router.use(authentication);
+router.get('/all', AdminUserController.getAllAdmin);
 router.post('/add', validateRegisterAdmin, AdminUserController.addNewAdmin);
 router.put('/edit/:id', AdminUserController.editAdmin);
 router.delete('/delete/:id', AdminUserController.deleteAdmin);
